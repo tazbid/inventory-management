@@ -3,13 +3,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Registration from "./components/Registration.vue";
 import Login from "./components/Login.vue";
 import Dashboard from "./components/Dashboard.vue";
-import GoogleCallback from "./components/GoogleCallback.vue";
-import GenerateJob from "./components/GenerateJob.vue";
-import GeneratedJobs from "./components/GeneratedJobs.vue";
-import JobDetails from "./components/JobDetails.vue";
-import JobApply from "./components/JobApply.vue";
-import JobApplications from "./components/JobApplications.vue";
-import JobApplicationDetails from "./components/JobApplicationDetails.vue";
 
 
 const routes = [
@@ -24,35 +17,7 @@ const routes = [
   {
     path: '/dashboard',
     component: Dashboard,
-  },
-  {
-    path: '/google/callback',
-    component: GoogleCallback,
-  },
-  {
-    path: '/user/generate-job',
-    component: GenerateJob,
-  },
-  {
-    path: '/user/generated-jobs',
-    component: GeneratedJobs,
-  },
-  {
-    path: '/job/:id',
-    component: JobDetails,
-  },
-  {
-    path: '/apply/:id',
-    component: JobApply,
-  },
-  {
-    path: '/job/:id/applications',
-    component: JobApplications,
-  },
-  {
-    path: '/job/:id/application/:applicationId',
-    component: JobApplicationDetails,
-  },
+  }
 ];
 
 const router = createRouter({

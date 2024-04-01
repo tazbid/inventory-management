@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-	baseURL: 'http://jobwiseai.test/api/',
+	baseURL: 'http://inventory-management.test/api/',
 });
 
 instance.interceptors.request.use(

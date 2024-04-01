@@ -52,20 +52,6 @@ function Login() {
       this.errorMessage = error.response.data.message;
     });
 }
-
-function LoginWithGoogle() {
-  AuthService.getGoogleUrl()
-    .then(response => {
-      console.log(response.data);
-      //redirect to url
-      window
-        .open(response.data.url, '_self')
-        .focus();
-    })
-    .catch(error => {
-      this.errorMessage = error.response.data.message;
-    });
-}
 </script>
 
 <style>
@@ -128,5 +114,10 @@ function LoginWithGoogle() {
   color: red;
   margin-top: 10px;
   text-align: center;
+}
+
+.login-container {
+  margin-top: 50px;
+  width: 500px;
 }
 </style>
