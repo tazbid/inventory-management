@@ -18,12 +18,12 @@ class InventoryDetailsService {
      */
     public function get(int $inventoryId, int $page, int $perPage): JsonResponse {
         try {
-            $inventory = InventoryDetailsModel::where('inventory_id', $inventoryId)->paginate($perPage, ['*'], 'page', $page);
+            $inventoryDetails = InventoryDetailsModel::where('inventory_id', $inventoryId)->paginate($perPage, ['*'], 'page', $page);
 
-            if ($inventory->isEmpty())
-                return $this->successResponse(data: $inventory, message: 'No inventory details found', code: Response::HTTP_NO_CONTENT);
+            if ($inventoryDetails->isEmpty())
+                return $this->successResponse(data: $inventoryDetails, message: 'No inventory details found', code: Response::HTTP_NO_CONTENT);
 
-            return $this->successResponse(data: $inventory, message: 'Inventory details retrieved successfully', code: Response::HTTP_OK);
+            return $this->successResponse(data: $inventoryDetails, message: 'Inventory details retrieved successfully', code: Response::HTTP_OK);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -37,9 +37,9 @@ class InventoryDetailsService {
      */
     public function getById(int $inventoryDetailsId): JsonResponse {
         try {
-            $inventory = InventoryDetailsModel::findOrFail($inventoryDetailsId);
+            $inventoryDetails = InventoryDetailsModel::findOrFail($inventoryDetailsId);
 
-            return $this->successResponse(data: $inventory, message: 'Inventory details retrieved successfully', code: Response::HTTP_OK);
+            return $this->successResponse(data: $inventoryDetails, message: 'Inventory details retrieved successfully', code: Response::HTTP_OK);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -53,9 +53,9 @@ class InventoryDetailsService {
      */
     public function create(array $data): JsonResponse {
         try {
-            $inventory = InventoryDetailsModel::create($data);
+            $inventoryDetails = InventoryDetailsModel::create($data);
 
-            return $this->successResponse(data: $inventory, message: 'Inventory details created successfully', code: Response::HTTP_CREATED);
+            return $this->successResponse(data: $inventoryDetails, message: 'Inventory details created successfully', code: Response::HTTP_CREATED);
         } catch (\Exception $e) {
             throw $e;
         }
