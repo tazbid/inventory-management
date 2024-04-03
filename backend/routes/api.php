@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\InventoryDetailsController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -15,9 +17,6 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('auth/google/url', [LoginController::class, 'redirectToGoogle']);
-Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
-
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [LoginController::class, 'register']);
 
@@ -25,13 +24,23 @@ Route::post('register', [LoginController::class, 'register']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [LoginController::class, 'logout']);
 
-    Route::get('user/jobs', [JobController::class, 'getJobsByAuthUser']);
-    Route::get('job/{id}', [JobController::class, 'getJobById']);
-    Route::get('jobs', [JobController::class, 'getJobs']);
-    Route::post('job/apply/{id}', [JobController::class, 'applyForJob']);
-    Route::get('job/{id}/applications', [JobController::class, 'getJobApplicants']);
-    Route::get('application/{id}', [JobController::class, 'getApplicationDetails']);
-    Route::get('application/{id}/resume', [JobController::class, 'downloadResume']);
-    Route::get('generate/comparison/{jobId}', [JobController::class, 'generateComparison']);
-    Route::get('job/check/timer', [JobController::class, 'checkTimer']);
+    //prefix for inventory
+    Route::prefix('inventory')->group(function () {
+        Route::get('/', [InventoryController::class, 'get']);
+        Route::get('/{inventoryId}', [InventoryController::class, 'getById']);
+        Route::post('/', [InventoryController::class, 'create']);
+        Route::put('/{inventoryId}', [InventoryController::class, 'update']);
+        Route::delete('/{inventoryId}', [InventoryController::class, 'delete']);
+
+        Route::prefix('{inventoryId}')->group(function () {
+        //prefix for inventory details
+            Route::prefix('details')->group(function () {
+                Route::get('/', [InventoryDetailsController::class, 'get']);
+                Route::get('/{inventoryDetailsId}', [InventoryDetailsController::class, 'getById']);
+                Route::post('/', [InventoryDetailsController::class, 'create']);
+                Route::put('/{inventoryDetailsId}', [InventoryDetailsController::class, 'update']);
+                Route::delete('/{inventoryDetailsId}', [InventoryDetailsController::class, 'delete']);
+            });
+        });
+    });
 });
