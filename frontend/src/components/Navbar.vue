@@ -19,8 +19,7 @@
                         <router-link to="/dashboard" class="nav-link" active-class="active" exact>Dashboard</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/user/generate-job" class="nav-link" active-class="active">Generate New
-                            Job</router-link>
+                        <router-link to="/add/inventory" class="nav-link" active-class="active">Add New Inventory</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/user/generated-jobs" class="nav-link" active-class="active">My Generated

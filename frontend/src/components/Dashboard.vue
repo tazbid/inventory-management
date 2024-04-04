@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h1>All Generated Jobs</h1>
+        <h1>All Inventories</h1>
         <ul>
-        <li v-for="job in jobs" :key="job.id">
-            {{ serial++ }}. {{ job.job_title }}
-            <button @click="viewJobDetails(job.id)">View Details</button>
+        <li v-for="inventory in inventory" :key="inventory.id" @click="viewInventoryDetails(inventory.id)">
+            <h3>Name: {{ inventory.name }}</h3>
+            <p>Description: {{ inventory.description }}</p>
         </li>
         </ul>
     </div>
@@ -12,24 +12,23 @@
   
 <script setup>
 import { ref, onMounted } from 'vue';
-import { JobService } from '../services';
+import { JobService, InventoryService } from '../services';
 import router from '../router';
 
-const jobs = ref([]);
-let serial = 1;
+const inventory = ref([]);
 
 onMounted(() => {
-    JobService.getAllJobs()
+    InventoryService.getAllInventoryForUser()
     .then(response => {
-        jobs.value = response.data;
+        inventory.value = response.data.data.data;
     })
     .catch(error => {
         console.log(error);
     });
 });
 
-const viewJobDetails = (id) => {
-    router.push('/job/' + id);
+const viewInventoryDetails = (id) => {
+    router.push(`/inventory/${id}`);
 }
 
 </script>

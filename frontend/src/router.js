@@ -17,7 +17,19 @@ const routes = [
   {
     path: '/dashboard',
     component: Dashboard,
-  }
+  },
+  {
+    path: '/add/inventory',
+    component: () => import('./components/AddInventory.vue'),
+  },
+  {
+    path: '/inventory/:id',
+    component: () => import('./components/InventoryDetails.vue'),
+  },
+  {
+    path: '/inventory/:id/details',
+    component: () => import('./components/AddItem.vue'),
+  },
 ];
 
 const router = createRouter({
