@@ -40,7 +40,7 @@ class InventoryDetailsController extends Controller
      * @return JsonResponse
      */
     public function getById(int $inventoryId, int $inventoryDetailsId): JsonResponse {
-        return $this->inventoryDetailsService->getById($inventoryDetailsId);
+        return $this->inventoryDetailsService->getById($inventoryDetailsId, $inventoryId);
     }
 
     /**
@@ -66,7 +66,7 @@ class InventoryDetailsController extends Controller
      */
     public function update(int $inventoryId,int $inventoryDetailsId, UpdateInventoryDetailsRequest $request): JsonResponse {
         $data = $request->json()->all();
-        return $this->inventoryDetailsService->update($data, $inventoryDetailsId);
+        return $this->inventoryDetailsService->update($data, $inventoryDetailsId, $inventoryId);
     }
 
     /**

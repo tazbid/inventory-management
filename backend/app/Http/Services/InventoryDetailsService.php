@@ -33,11 +33,16 @@ class InventoryDetailsService {
      * Get inventory details by id
      *
      * @param int $inventoryDetailsId
+     * @param int $inventoryId
      * @return JsonResponse
      */
-    public function getById(int $inventoryDetailsId): JsonResponse {
+    public function getById(int $inventoryDetailsId, int $inventoryId): JsonResponse {
         try {
-            $inventoryDetails = InventoryDetailsModel::findOrFail($inventoryDetailsId);
+            $inventoryDetails = InventoryDetailsModel::with('inventory')
+            ->findOrFail($inventoryDetailsId);
+
+            if($inventoryDetails->inventory->user_id != auth()->user()->id || $inventoryDetails->inventory_id != $inventoryId)
+                return $this->errorResponse(message: 'Unauthorized', code: Response::HTTP_UNAUTHORIZED);
 
             return $this->successResponse(data: $inventoryDetails, message: 'Inventory details retrieved successfully', code: Response::HTTP_OK);
         } catch (\Exception $e) {
@@ -66,11 +71,15 @@ class InventoryDetailsService {
      *
      * @param array $data
      * @param int $inventoryDetailsId
+     * @param int $inventoryId
      * @return JsonResponse
      */
-    public function update(array $data, int $inventoryDetailsId): JsonResponse {
+    public function update(array $data, int $inventoryDetailsId, int $inventoryId): JsonResponse {
         try {
-            $inventoryDetails = InventoryDetailsModel::findOrFail($inventoryDetailsId);
+            $inventoryDetails = InventoryDetailsModel::with('inventory')
+            ->findOrFail($inventoryDetailsId);
+            if($inventoryDetails->inventory->user_id != auth()->user()->id || $inventoryDetails->inventory_id != $inventoryId)
+                return $this->errorResponse(message: 'Unauthorized', code: Response::HTTP_UNAUTHORIZED);
             $inventoryDetails->update($data);
 
             return $this->successResponse(data: $inventoryDetails, message: 'Inventory details updated successfully', code: Response::HTTP_OK);
